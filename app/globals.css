@@ -1,26 +1,251 @@
 @import "tailwindcss";
 
+/* =====================================================
+   ABO PATOS DE MINAS — TOKENS DE DESIGN
+   ⚠️  ACCENT: substituir #1A4B8C pelo HEX exato da logo
+   ===================================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* =====================================================
+     PALETA EXTRAÍDA DA LOGOMARCA ABO
+     Verde principal (letras ABO): #1A6B2A
+     Azul (globo):                 #1E5FAD
+     Vermelho escuro (anel):       #8B1A28
+     Amarelo/ouro (mapa Brasil):   #D4A017
+     ===================================================== */
+
+  /* === ACCENT — azul institucional ABO === */
+  --abo-accent:        #013775;
+  --abo-accent-dark:   #01285A;
+  --abo-accent-subtle: rgba(1, 55, 117, 0.10);
+
+  /* === TERTIARY — verde da logomarca ABO === */
+  --abo-tertiary:        #1A6B2A;
+  --abo-tertiary-subtle: rgba(26, 107, 42, 0.10);
+
+  /* === CORES SECUNDÁRIAS DA LOGO === */
+  --abo-logo-blue:     #013775;
+  --abo-logo-green:    #1A6B2A;
+  --abo-logo-red:      #8B1A28;
+  --abo-logo-gold:     #D4A017;
+
+  /* === SURFACES === */
+  --abo-surface-page:       #FFFFFF;
+  --abo-surface-subtle:     #F4F7F4;
+  --abo-surface-nav:        #FFFFFF;
+  --abo-surface-card:       #FFFFFF;
+  --abo-surface-dark:       #0B1A0F;
+  --abo-surface-card-dark:  #122017;
+  --abo-surface-cta:        #071209;
+  --abo-surface-footer:     #050D07;
+
+  /* === INK — contexto light === */
+  --abo-ink-display:    #071026;
+  --abo-ink-body:       #0F1C3A;
+  --abo-ink-secondary:  #2E3F60;
+  --abo-ink-micro:      #526380;
+
+  /* === INK — contexto dark === */
+  --abo-ink-display-dark:   #FFFFFF;
+  --abo-ink-body-dark:      #F0F4FA;
+  --abo-ink-secondary-dark: rgba(240, 244, 250, 0.82);
+  --abo-ink-micro-dark:     rgba(240, 244, 250, 0.60);
+
+  /* === BADGE COLORS === */
+  --abo-badge-atualizacao:     rgba(26, 107, 42, 0.12);
+  --abo-badge-aperfeicoamento: rgba(212, 160, 23, 0.15);
+  --abo-badge-especializacao:  rgba(30, 95, 173, 0.12);
+  --abo-badge-imersao:         rgba(13, 107, 94, 0.12);
+  --abo-badge-formacao:        rgba(74, 96, 80, 0.12);
+  --abo-badge-evento:          rgba(139, 26, 40, 0.12);
 }
+
+/* =====================================================
+   TAILWIND V4 THEME — MAPEAMENTO DE UTILIDADES
+   ===================================================== */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Accent */
+  --color-accent:         var(--abo-accent);
+  --color-accent-dark:    var(--abo-accent-dark);
+  --color-accent-subtle:  var(--abo-accent-subtle);
+
+  /* Surfaces */
+  --color-surface-page:      var(--abo-surface-page);
+  --color-surface-subtle:    var(--abo-surface-subtle);
+  --color-surface-nav:       var(--abo-surface-nav);
+  --color-surface-card:      var(--abo-surface-card);
+  --color-surface-dark:      var(--abo-surface-dark);
+  --color-surface-card-dark: var(--abo-surface-card-dark);
+  --color-surface-cta:       var(--abo-surface-cta);
+  --color-surface-footer:    var(--abo-surface-footer);
+
+  /* Ink — light */
+  --color-ink-display:   var(--abo-ink-display);
+  --color-ink-body:      var(--abo-ink-body);
+  --color-ink-secondary: var(--abo-ink-secondary);
+  --color-ink-micro:     var(--abo-ink-micro);
+
+  /* Ink — dark */
+  --color-ink-display-dark:   var(--abo-ink-display-dark);
+  --color-ink-body-dark:      var(--abo-ink-body-dark);
+  --color-ink-secondary-dark: var(--abo-ink-secondary-dark);
+  --color-ink-micro-dark:     var(--abo-ink-micro-dark);
+
+  /* Typography */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+  /* Border Radius */
+  --radius-card:   1.5rem;   /* 24px */
+  --radius-image:  1.125rem; /* 18px */
+  --radius-button: 0.75rem;  /* 12px */
+  --radius-badge:  9999px;
+  --radius-subtle: 0.5rem;   /* 8px */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* =====================================================
+   BASE STYLES
+   ===================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+  background-color: var(--abo-surface-page);
+  color: var(--abo-ink-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scroll offset para nav fixa */
+[id] {
+  scroll-margin-top: 80px;
+}
+
+/* =====================================================
+   TIPOGRAFIA — DISPLAY / SERIF
+   ===================================================== */
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.headline-hero {
+  font-size: clamp(2.75rem, 6vw, 5.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.headline-section {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.headline-card {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* =====================================================
+   ANIMAÇÕES DE SCROLL — Fade + Slide Up
+   ===================================================== */
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Intersection Observer classes */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delays */
+.delay-1 { transition-delay: 80ms; }
+.delay-2 { transition-delay: 160ms; }
+.delay-3 { transition-delay: 240ms; }
+.delay-4 { transition-delay: 320ms; }
+.delay-5 { transition-delay: 400ms; }
+
+/* =====================================================
+   UTILITÁRIOS CUSTOMIZADOS
+   ===================================================== */
+
+/* Underline accent animado para links de nav */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  border-radius: 1px;
+  background-color: var(--abo-accent);
+  transition: width 200ms ease;
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* Placeholder de imagem */
+.img-placeholder {
+  background: linear-gradient(135deg, #E8EDF2 0%, #D8DEE6 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Scrollbar customizada (sutil) */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--abo-surface-subtle);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--abo-accent-subtle);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--abo-accent);
 }
