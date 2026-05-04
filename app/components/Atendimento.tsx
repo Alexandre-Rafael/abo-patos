@@ -65,9 +65,9 @@ export default function Atendimento() {
                 <Clock size={16} style={{ color: "var(--abo-accent)" }} />
                 <span>Seg–Qui: 8h–13h · Sex e Sáb em dias de curso</span>
               </div>
-              <div className="flex items-center gap-2">
-                <MapPin size={16} style={{ color: "var(--abo-accent)" }} />
-                <span>Rua dos Carajás — Caiçaras, Patos de Minas - MG</span>
+              <div className="flex items-start gap-2">
+                <MapPin size={16} style={{ color: "var(--abo-accent)" }} className="mt-0.5 flex-shrink-0" />
+                <span>Rua Carajás, 729 — Patos de Minas - MG, 38702-188 <br /><span style={{ opacity: 0.7 }}>(próximo ao Hotel IBIS)</span></span>
               </div>
             </div>
 

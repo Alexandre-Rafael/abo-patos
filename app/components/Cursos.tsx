@@ -1,6 +1,6 @@
+import Image from "next/image";
 import { MessageCircle } from "lucide-react";
 
-// [ASSET EXTERNO] — Foto real de cada curso em andamento (1 por curso)
 // [DADO A CONFIRMAR] — Carga horária e datas de cada curso
 
 type Modalidade =
@@ -16,11 +16,13 @@ interface Curso {
   titulo: string;
   modalidade: Modalidade;
   descricao: string;
+  chamada?: string;
   formato: string;
   cargaHoraria: string;
   publico: string;
   inicio: string;
-  fotoLabel: string;
+  capa: string;
+  inscricaoUrl?: string;
 }
 
 const cursos: Curso[] = [
@@ -34,7 +36,7 @@ const cursos: Curso[] = [
     cargaHoraria: "A confirmar",
     publico: "Cirurgiões-dentistas",
     inicio: "A confirmar",
-    fotoLabel: "Dentística — procedimento restaurador em andamento",
+    capa: "/imgs/cursos/dentistica.png",
   },
   {
     numero: "02",
@@ -46,7 +48,7 @@ const cursos: Curso[] = [
     cargaHoraria: "A confirmar",
     publico: "Cirurgiões-dentistas",
     inicio: "A confirmar",
-    fotoLabel: "Endodontia — instrumentação e tratamento de canal",
+    capa: "/imgs/cursos/endodontia.png",
   },
   {
     numero: "03",
@@ -58,7 +60,7 @@ const cursos: Curso[] = [
     cargaHoraria: "A confirmar",
     publico: "Cirurgiões-dentistas",
     inicio: "A confirmar",
-    fotoLabel: "Cirurgia Oral — procedimento prático supervisionado",
+    capa: "/imgs/cursos/cirurgia-periodontia.png",
   },
   {
     numero: "04",
@@ -70,7 +72,7 @@ const cursos: Curso[] = [
     cargaHoraria: "A confirmar",
     publico: "Cirurgiões-dentistas",
     inicio: "A confirmar",
-    fotoLabel: "Ortodontia — colocação de aparelho e acompanhamento clínico",
+    capa: "/imgs/cursos/ortodontia.png",
   },
   {
     numero: "05",
@@ -82,7 +84,7 @@ const cursos: Curso[] = [
     cargaHoraria: "A confirmar",
     publico: "Cirurgiões-dentistas habilitados",
     inicio: "A confirmar",
-    fotoLabel: "Harmonização Facial — aplicação supervisionada em modelo",
+    capa: "/imgs/cursos/toxina-botulinica.png",
   },
   {
     numero: "06",
@@ -94,19 +96,21 @@ const cursos: Curso[] = [
     cargaHoraria: "A confirmar",
     publico: "Cirurgiões-dentistas",
     inicio: "A confirmar",
-    fotoLabel: "Facetas em Resina — técnica de estratificação e escultura",
+    capa: "/imgs/cursos/facetas.png",
   },
   {
     numero: "07",
     titulo: "Curso de ASB — Auxiliar em Saúde Bucal",
     modalidade: "Formação",
     descricao:
-      "Formação completa para Auxiliar em Saúde Bucal (ASB), habilitando profissionais para atuar em clínicas odontológicas com toda a segurança exigida pelo CRO-MG.",
-    formato: "Presencial",
+      "É com imenso prazer que viemos informá-los que trazemos uma novidade muito esperada: o retorno do curso de Auxiliar de Saúde Bucal — ASB. Em parceria com a ABO Montes Claros, disponibilizamos o curso de forma on-line. Compartilhe o link abaixo para que possamos fortalecer nossa querida ABO Patos de Minas.",
+    chamada: "Inscrições abertas — modalidade on-line, em parceria com a ABO Montes Claros.",
+    formato: "On-line",
     cargaHoraria: "A confirmar",
     publico: "Ensino médio completo",
     inicio: "A confirmar",
-    fotoLabel: "Curso ASB — formação prática em ambiente clínico",
+    capa: "/imgs/cursos/asb.png",
+    inscricaoUrl: "https://hotm.art/abopatosdeminas",
   },
 ];
 
@@ -169,32 +173,19 @@ function CursoFicha({ curso, invertido }: { curso: Curso; invertido: boolean }) 
         flexDirection: invertido ? undefined : undefined,
       }}
     >
-      {/* Foto do curso */}
+      {/* Capa do curso */}
       <div
-        className={`relative flex-shrink-0 lg:w-[38%] aspect-[4/3] lg:aspect-auto ${
+        className={`relative flex-shrink-0 lg:w-[38%] aspect-[4/3] lg:aspect-auto min-h-[260px] ${
           invertido ? "lg:order-2" : "lg:order-1"
         }`}
       >
-        <div className="img-placeholder w-full h-full min-h-[220px]"
-          style={{
-            background: "linear-gradient(135deg, #1a2a3a 0%, #0d1b2a 100%)",
-          }}
-        >
-          <div
-            className="w-10 h-10 rounded-subtle flex items-center justify-center mb-2"
-            style={{ backgroundColor: "rgba(1,55,117,0.25)" }}
-          >
-            <span style={{ color: "var(--abo-accent)", fontSize: 18 }}>📸</span>
-          </div>
-          <p
-            className="text-xs text-center font-medium max-w-[180px]"
-            style={{ color: "rgba(232,237,242,0.45)" }}
-          >
-            [ASSET EXTERNO]
-            <br />
-            {curso.fotoLabel}
-          </p>
-        </div>
+        <Image
+          src={curso.capa}
+          alt={curso.titulo}
+          fill
+          sizes="(min-width: 1024px) 38vw, 100vw"
+          className="object-cover"
+        />
       </div>
 
       {/* Conteúdo da ficha */}
@@ -262,7 +253,7 @@ function CursoFicha({ curso, invertido }: { curso: Curso; invertido: boolean }) 
         </div>
 
         {/* CTA */}
-        <div className="mt-auto pt-2">
+        <div className="mt-auto pt-2 flex flex-wrap gap-3">
           <a
             href="https://wa.me/5534997890123"
             target="_blank"
@@ -277,6 +268,21 @@ function CursoFicha({ curso, invertido }: { curso: Curso; invertido: boolean }) 
             <MessageCircle size={15} />
             Saber mais no WhatsApp
           </a>
+          {curso.inscricaoUrl && (
+            <a
+              href={curso.inscricaoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2.5 px-5 py-3 rounded-badge text-sm font-semibold transition-all duration-150 hover:-translate-y-0.5"
+              style={{
+                color: "white",
+                backgroundColor: "var(--abo-accent)",
+                boxShadow: "0 4px 16px rgba(1,55,117,0.30)",
+              }}
+            >
+              Inscrever-se →
+            </a>
+          )}
         </div>
       </div>
     </article>

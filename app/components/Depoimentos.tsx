@@ -1,10 +1,7 @@
 "use client";
 
-// [ASSET EXTERNO] — Links dos vídeos do Instagram com depoimentos de associados
-// [DADO A CONFIRMAR] — Depoimentos em texto: nome, especialidade, frase de impacto
-
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
 
 function InstagramIcon({ size = 16 }: { size?: number }) {
   return (
@@ -16,43 +13,74 @@ function InstagramIcon({ size = 16 }: { size?: number }) {
   );
 }
 
+type Origem = "google" | "associado";
+
 interface Depoimento {
   nome: string;
   especialidade: string;
   texto: string;
-  instagramUrl?: string;
+  origem: Origem;
+  nota?: number;
+  quando?: string;
 }
 
 const depoimentos: Depoimento[] = [
   {
-    nome: "Dr(a). A confirmar",
-    especialidade: "Especialista em Dentística",
+    nome: "Dra. Isabella Magalhães",
+    especialidade: "Aluna do curso de HOF · Monitora do curso de Cirurgia",
     texto:
       "A ABO Patos de Minas foi fundamental para minha atualização profissional. Os cursos são conduzidos por profissionais de alto nível e a troca com os colegas da região é inestimável.",
-    instagramUrl: undefined,
+    origem: "associado",
   },
   {
-    nome: "Dr(a). A confirmar",
-    especialidade: "Cirurgião-dentista — Clínica Geral",
+    nome: "vani pautz",
+    especialidade: "Local Guide · Google Meu Negócio",
     texto:
-      "Participar dos cursos da ABO me deu a segurança que precisava para aplicar técnicas modernas na minha prática diária. O ambiente é sério, o conteúdo é atualizado.",
-    instagramUrl: undefined,
+      "Atendimento odontológico de excelência, profissionais atendem no horário exato agendado e sempre prestativos, não deixando a desejar de um serviço particular.",
+    origem: "google",
+    nota: 5,
+    quando: "3 anos atrás",
   },
   {
-    nome: "Dr(a). A confirmar",
-    especialidade: "Especialista em Ortodontia",
-    texto:
-      "Não é só um curso — é uma comunidade. Fiz amizades, aprendi com colegas incríveis e me sinto parte de algo maior que a minha clínica. Recomendo a todos.",
-    instagramUrl: undefined,
+    nome: "Adriano Lacerda",
+    especialidade: "Local Guide · Google Meu Negócio",
+    texto: "Instituição com excelentes cursos e profissionais de competência.",
+    origem: "google",
+    nota: 5,
+    quando: "6 anos atrás",
   },
   {
-    nome: "Dr(a). A confirmar",
-    especialidade: "Recém-formada — UNIUBE",
-    texto:
-      "Logo que me formei, a ABO foi o primeiro lugar que busquei. A acolhida foi excelente e os cursos me ajudaram a consolidar o que aprendi na faculdade com aplicação prática real.",
-    instagramUrl: undefined,
+    nome: "Charles Frantec",
+    especialidade: "Local Guide · Google Meu Negócio",
+    texto: "Fui bem atendido.",
+    origem: "google",
+    nota: 5,
+    quando: "4 anos atrás",
+  },
+  {
+    nome: "Rubens Almeida Pego",
+    especialidade: "Local Guide · Google Meu Negócio",
+    texto: "Excelente.",
+    origem: "google",
+    nota: 4,
+    quando: "3 anos atrás",
   },
 ];
+
+function Estrelas({ nota }: { nota: number }) {
+  return (
+    <div className="flex items-center gap-0.5" aria-label={`${nota} de 5 estrelas`}>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <Star
+          key={i}
+          size={14}
+          fill={i < nota ? "#F4B400" : "transparent"}
+          stroke={i < nota ? "#F4B400" : "rgba(10,27,45,0.25)"}
+        />
+      ))}
+    </div>
+  );
+}
 
 export default function Depoimentos() {
   const [atual, setAtual] = useState(0);
@@ -118,6 +146,9 @@ export default function Depoimentos() {
                 style={{ color: "var(--abo-accent)", opacity: 0.4 }}
               />
 
+              {/* Estrelas (só para avaliações Google) */}
+              {dep.origem === "google" && dep.nota && <Estrelas nota={dep.nota} />}
+
               {/* Texto do depoimento */}
               <p
                 className="font-display italic text-xl leading-relaxed flex-1"
@@ -126,7 +157,7 @@ export default function Depoimentos() {
                   color: "var(--abo-ink-body)",
                 }}
               >
-                "{dep.texto}"
+                &ldquo;{dep.texto}&rdquo;
               </p>
 
               {/* Autor */}
@@ -135,9 +166,9 @@ export default function Depoimentos() {
                   className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
                   style={{ backgroundColor: "var(--abo-accent)" }}
                 >
-                  {dep.nome.charAt(0)}
+                  {dep.nome.charAt(0).toUpperCase()}
                 </div>
-                <div>
+                <div className="flex-1 min-w-0">
                   <p
                     className="font-semibold text-sm"
                     style={{ color: "var(--abo-ink-display)" }}
@@ -149,79 +180,89 @@ export default function Depoimentos() {
                     style={{ color: "var(--abo-ink-secondary)" }}
                   >
                     {dep.especialidade}
+                    {dep.quando ? ` · ${dep.quando}` : ""}
                   </p>
                 </div>
                 <span
-                  className="ml-auto px-2.5 py-1 rounded-badge text-xs font-semibold"
+                  className="ml-auto px-2.5 py-1 rounded-badge text-xs font-semibold flex-shrink-0"
                   style={{
-                    backgroundColor: "rgba(1,55,117,0.10)",
-                    color: "var(--abo-accent)",
-                    border: "1px solid rgba(1,55,117,0.20)",
+                    backgroundColor:
+                      dep.origem === "google"
+                        ? "rgba(244,180,0,0.12)"
+                        : "rgba(1,55,117,0.10)",
+                    color:
+                      dep.origem === "google" ? "#A07030" : "var(--abo-accent)",
+                    border:
+                      dep.origem === "google"
+                        ? "1px solid rgba(244,180,0,0.40)"
+                        : "1px solid rgba(1,55,117,0.20)",
                   }}
                 >
-                  Associado ABO
+                  {dep.origem === "google" ? "Avaliação Google" : "Associado ABO"}
                 </span>
               </div>
             </div>
 
-            {/* Controles do carrossel */}
-            <div className="flex items-center gap-4">
-              <button
-                onClick={anterior}
-                className="w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-150 hover:bg-surface-subtle"
-                style={{
-                  borderColor: "rgba(10,27,45,0.15)",
-                  color: "var(--abo-ink-body)",
-                }}
-                aria-label="Depoimento anterior"
-              >
-                <ChevronLeft size={18} />
-              </button>
+            {/* Controles do carrossel — escondidos quando há só um depoimento */}
+            {depoimentos.length > 1 && (
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={anterior}
+                  className="w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-150 hover:bg-surface-subtle"
+                  style={{
+                    borderColor: "rgba(10,27,45,0.15)",
+                    color: "var(--abo-ink-body)",
+                  }}
+                  aria-label="Depoimento anterior"
+                >
+                  <ChevronLeft size={18} />
+                </button>
 
-              <div className="flex gap-2">
-                {depoimentos.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setAtual(i)}
-                    className="rounded-full transition-all duration-200"
-                    style={{
-                      width: i === atual ? "24px" : "8px",
-                      height: "8px",
-                      backgroundColor:
-                        i === atual
-                          ? "var(--abo-accent)"
-                          : "rgba(10,27,45,0.15)",
-                    }}
-                    aria-label={`Depoimento ${i + 1}`}
-                  />
-                ))}
+                <div className="flex gap-2">
+                  {depoimentos.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setAtual(i)}
+                      className="rounded-full transition-all duration-200"
+                      style={{
+                        width: i === atual ? "24px" : "8px",
+                        height: "8px",
+                        backgroundColor:
+                          i === atual
+                            ? "var(--abo-accent)"
+                            : "rgba(10,27,45,0.15)",
+                      }}
+                      aria-label={`Depoimento ${i + 1}`}
+                    />
+                  ))}
+                </div>
+
+                <button
+                  onClick={proximo}
+                  className="w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-150 hover:bg-surface-subtle"
+                  style={{
+                    borderColor: "rgba(10,27,45,0.15)",
+                    color: "var(--abo-ink-body)",
+                  }}
+                  aria-label="Próximo depoimento"
+                >
+                  <ChevronRight size={18} />
+                </button>
               </div>
-
-              <button
-                onClick={proximo}
-                className="w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-150 hover:bg-surface-subtle"
-                style={{
-                  borderColor: "rgba(10,27,45,0.15)",
-                  color: "var(--abo-ink-body)",
-                }}
-                aria-label="Próximo depoimento"
-              >
-                <ChevronRight size={18} />
-              </button>
-            </div>
+            )}
           </div>
 
           {/* Coluna Direita — Vídeo depoimento */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 items-center">
             <p
-              className="text-sm font-medium mb-2"
+              className="text-sm font-medium mb-2 text-center"
               style={{ color: "var(--abo-ink-body)" }}
             >
               Assista ao depoimento em vídeo:
             </p>
 
             <div
-              className="relative rounded-card overflow-hidden aspect-[9/16] w-full max-w-sm mx-auto"
+              className="relative rounded-card overflow-hidden aspect-[9/16] w-full max-w-sm"
               style={{
                 boxShadow: "0 16px 48px rgba(10,27,45,0.20)",
                 backgroundColor: "#000",

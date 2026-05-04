@@ -4,7 +4,7 @@ interface Membro {
   nome: string;
   cargo: string;
   lattes?: string;
-  foto: string;
+  foto?: string;
 }
 
 const diretoria: Membro[] = [
@@ -24,7 +24,7 @@ const diretoria: Membro[] = [
     nome: "Beatriz Vieira de Paiva",
     cargo: "Secretária",
     lattes: "https://lattes.cnpq.br/4655997612795313",
-    foto: "/imgs/diretoria/beatriz.jpg",
+    foto: "/imgs/diretoria/beatriz.png",
   },
   {
     nome: "Stefânia Michelle da Mota",
@@ -49,16 +49,31 @@ function CardMembro({ membro }: { membro: Membro }) {
   return (
     <div className="flex flex-col">
       <div
-        className="relative rounded-card overflow-hidden aspect-[3/4] mb-4"
-        style={{ boxShadow: "0 4px 20px rgba(10,27,45,0.08)" }}
+        className="relative rounded-card overflow-hidden aspect-[3/4] mb-4 flex items-center justify-center"
+        style={{
+          boxShadow: "0 4px 20px rgba(10,27,45,0.08)",
+          backgroundColor: "rgba(1,55,117,0.08)",
+        }}
       >
-        <Image
-          src={membro.foto}
-          alt={membro.nome}
-          fill
-          sizes="(min-width: 1024px) 22vw, 45vw"
-          className="object-cover"
-        />
+        {membro.foto ? (
+          <Image
+            src={membro.foto}
+            alt={membro.nome}
+            fill
+            sizes="(min-width: 1024px) 22vw, 45vw"
+            className="object-cover"
+          />
+        ) : (
+          <div className="flex flex-col items-center gap-2 px-4 text-center">
+            <span style={{ fontSize: 36, opacity: 0.4 }}>👤</span>
+            <p
+              className="text-xs font-medium"
+              style={{ color: "var(--abo-ink-micro)" }}
+            >
+              Foto em breve
+            </p>
+          </div>
+        )}
       </div>
 
       <div className="flex flex-col gap-1.5">

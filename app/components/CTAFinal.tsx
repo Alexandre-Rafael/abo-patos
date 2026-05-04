@@ -83,7 +83,7 @@ export default function CTAFinal() {
             >
               <div className="flex items-start gap-2">
                 <MapPin size={14} className="mt-0.5 flex-shrink-0" />
-                <span>Rua dos Carajás — Caiçaras, Patos de Minas - MG, 38702-188</span>
+                <span>Rua Carajás, 729 — Patos de Minas - MG, 38702-188</span>
               </div>
               <div className="flex items-start gap-2">
                 <Clock size={14} className="mt-0.5 flex-shrink-0" />
@@ -99,7 +99,7 @@ export default function CTAFinal() {
           >
             <iframe
               title="Localização ABO Patos de Minas"
-              src="https://www.google.com/maps?q=Rua+dos+Caraj%C3%A1s+Cai%C3%A7aras+Patos+de+Minas+MG+38702-188&output=embed"
+              src="https://www.google.com/maps?q=Rua+Caraj%C3%A1s+729+Patos+de+Minas+MG+38702-188&output=embed"
               className="absolute inset-0 w-full h-full border-0"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"

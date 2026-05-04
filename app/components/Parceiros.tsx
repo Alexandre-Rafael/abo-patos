@@ -1,58 +1,47 @@
-// [ASSET EXTERNO] — Substituir placeholders pelos logos reais dos parceiros (PNG transparente ou SVG)
+import Image from "next/image";
 
 const parceiros = [
-  { nome: "Parceiro 1", sigla: "P1" },
-  { nome: "Parceiro 2", sigla: "P2" },
-  { nome: "Parceiro 3", sigla: "P3" },
-  { nome: "Parceiro 4", sigla: "P4" },
-  { nome: "Parceiro 5", sigla: "P5" },
-  { nome: "Parceiro 6", sigla: "P6" },
+  { nome: "Linkus Contabilidade de Saúde", logo: "/imgs/parceiros/linkus.png" },
+  { nome: "Lumiar", logo: "/imgs/parceiros/lumiar.png" },
+  { nome: "Ferreira & Souza", logo: "/imgs/parceiros/ferreira-souza.png" },
+  { nome: "Pamela Andrade", logo: "/imgs/parceiros/pamela-andrade.png" },
+  { nome: "Mariana", logo: "/imgs/parceiros/mariana.png" },
+  { nome: "Murilo", logo: "/imgs/parceiros/murilo.png" },
 ];
 
 export default function Parceiros() {
   return (
     <section
       id="parceiros"
-      className="py-8 border-y"
+      className="py-14 lg:py-16 border-y"
       style={{
         backgroundColor: "var(--abo-surface-subtle)",
         borderColor: "rgba(10,27,45,0.06)",
       }}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-10">
-          {/* Label */}
+        <div className="flex flex-col items-center gap-8 lg:gap-10">
           <span
-            className="eyebrow flex-shrink-0"
+            className="eyebrow"
             style={{ color: "var(--abo-ink-micro)" }}
           >
             Parceiros e Apoiadores
           </span>
 
-          {/* Linha divisória */}
-          <div
-            className="hidden sm:block w-px h-8 flex-shrink-0"
-            style={{ backgroundColor: "rgba(10,27,45,0.10)" }}
-          />
-
-          {/* Logos */}
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-8 flex-1">
-            {parceiros.map((parceiro, i) => (
+          <div className="flex flex-wrap items-center justify-center gap-x-14 gap-y-10 lg:gap-x-20">
+            {parceiros.map((parceiro) => (
               <div
-                key={i}
-                className="flex items-center gap-2 transition-all duration-200 opacity-50 hover:opacity-100 cursor-default"
+                key={parceiro.nome}
+                className="relative h-24 w-44 lg:h-28 lg:w-52 transition-all duration-200 grayscale opacity-70 hover:grayscale-0 hover:opacity-100"
                 title={parceiro.nome}
               >
-                {/* [ASSET EXTERNO] — substituir por <Image src="/parceiros/parceiro-n.svg" /> */}
-                <div
-                  className="w-20 h-8 rounded-subtle flex items-center justify-center text-xs font-semibold"
-                  style={{
-                    backgroundColor: "rgba(10,27,45,0.06)",
-                    color: "var(--abo-ink-secondary)",
-                  }}
-                >
-                  {parceiro.sigla}
-                </div>
+                <Image
+                  src={parceiro.logo}
+                  alt={parceiro.nome}
+                  fill
+                  sizes="(min-width: 1024px) 208px, 176px"
+                  className="object-contain"
+                />
               </div>
             ))}
           </div>

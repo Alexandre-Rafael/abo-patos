@@ -188,7 +188,7 @@ export default function Footer() {
                 className="text-sm leading-relaxed"
                 style={{ color: "var(--abo-ink-secondary)" }}
               >
-                Rua dos Carajás — Caiçaras
+                Rua Carajás, 729
                 <br />
                 Patos de Minas — MG
                 <br />

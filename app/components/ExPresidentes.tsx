@@ -5,10 +5,12 @@ interface ExPresidente {
   periodo: string;
   foto?: string;
   atual?: boolean;
+  fotoPosicao?: string;
+  fotoZoom?: number;
 }
 
 const exPresidentes: ExPresidente[] = [
-  { nome: "Celso Clarimundo da Fonseca", periodo: "1956–1957", foto: "/imgs/presidentes/celso-fonseca.png" },
+  { nome: "Celso Clarimundo da Fonseca", periodo: "1956–1957", foto: "/imgs/presidentes/celso-fonseca.png", fotoPosicao: "center 28%", fotoZoom: 1.18 },
   { nome: "Cristovão Caixeta de Melo", periodo: "1957–1961 · 1964–1965 · 1969–1971", foto: "/imgs/presidentes/cristovao-melo.png" },
   { nome: "Romero Marques", periodo: "1961–1962", foto: "/imgs/presidentes/romero-marques.png" },
   { nome: "Dirceu Deoclaciano Pacheco", periodo: "1963–1964 · 1975–1979", foto: "/imgs/presidentes/dirceu-pacheco.png" },
@@ -31,7 +33,7 @@ const exPresidentes: ExPresidente[] = [
   {
     nome: "Victor da Mota Martins",
     periodo: "2024–2026",
-    foto: "/imgs/presidentes/victor.jpg",
+    foto: "/imgs/presidentes/victor.png",
     atual: true,
   },
 ];
@@ -127,7 +129,10 @@ export default function ExPresidentes() {
                     fill
                     sizes="88px"
                     className="object-cover"
-                    style={{ objectPosition: "center 20%" }}
+                    style={{
+                      objectPosition: pres.fotoPosicao ?? "center 20%",
+                      transform: pres.fotoZoom ? `scale(${pres.fotoZoom})` : undefined,
+                    }}
                   />
                 ) : (
                   <span style={{ fontSize: 24, opacity: 0.35 }}>👤</span>
