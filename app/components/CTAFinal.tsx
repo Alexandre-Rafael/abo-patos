@@ -36,7 +36,7 @@ export default function CTAFinal() {
               </span>
               referência em
               <br />
-              <span style={{ color: "var(--abo-accent)" }}>odontologia.</span>
+              <span style={{ color: "white" }}>odontologia.</span>
             </h2>
 
             <p

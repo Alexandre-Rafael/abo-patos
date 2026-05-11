@@ -82,7 +82,7 @@ export default function Atendimento() {
               }}
             >
               <MessageCircle size={16} />
-              WhatsApp Pacientes — (34) 99894-0124
+              WhatsApp Pacientes
             </a>
           </div>
         </div>

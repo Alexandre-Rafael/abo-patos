@@ -35,6 +35,8 @@ const exPresidentes: ExPresidente[] = [
     periodo: "2024–2026",
     foto: "/imgs/presidentes/victor.png",
     atual: true,
+    fotoPosicao: "center 10%",
+    fotoZoom: 2.2,
   },
 ];
 

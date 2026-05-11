@@ -93,17 +93,6 @@ function CardMembro({ membro }: { membro: Membro }) {
           style={{ backgroundColor: "rgba(1,55,117,0.30)" }}
         />
 
-        {membro.lattes && (
-          <a
-            href={membro.lattes}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-xs font-medium mt-2 transition-all duration-200 hover:gap-2"
-            style={{ color: "var(--abo-accent)" }}
-          >
-            Ver currículo Lattes →
-          </a>
-        )}
       </div>
     </div>
   );

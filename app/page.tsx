@@ -12,52 +12,59 @@ import FAQ from "./components/FAQ";
 import CTAFinal from "./components/CTAFinal";
 import Footer from "./components/Footer";
 import WhatsAppFloat from "./components/WhatsAppFloat";
+import FadeIn from "./components/FadeIn";
 
 export default function Home() {
   return (
     <>
-      {/* Navegação fixa */}
       <Nav />
 
       <main>
-        {/* ATO 1 — CHAMADO */}
+        {/* Hero aparece imediatamente, sem animação de entrada */}
         <Hero />
 
-        {/* RESPIRO — Prova social rápida */}
-        <Parceiros />
+        <FadeIn delay={0}>
+          <Parceiros />
+        </FadeIn>
 
-        {/* ATO 2 — RAÍZES */}
-        <Sobre />
+        <FadeIn>
+          <Sobre />
+        </FadeIn>
 
-        {/* ATO 3 — CLÍMAX — Produto principal */}
-        <Cursos />
+        <FadeIn>
+          <Cursos />
+        </FadeIn>
 
-        {/* ATO 4 — AUTORIDADE */}
-        <Diretoria />
+        <FadeIn>
+          <Diretoria />
+        </FadeIn>
 
-        {/* RESPIRO — Tradição e história */}
-        <ExPresidentes />
+        <FadeIn>
+          <ExPresidentes />
+        </FadeIn>
 
-        {/* HUMANIZAÇÃO — Vozes da comunidade */}
-        <Depoimentos />
+        <FadeIn>
+          <Depoimentos />
+        </FadeIn>
 
-        {/* ATO 5 — COMUNIDADE */}
-        <Eventos />
+        <FadeIn>
+          <Eventos />
+        </FadeIn>
 
-        {/* EXTENSÃO — Atendimento a pacientes */}
-        <Atendimento />
+        <FadeIn>
+          <Atendimento />
+        </FadeIn>
 
-        {/* CLAREZA — Remoção de objeções */}
-        <FAQ />
+        <FadeIn>
+          <FAQ />
+        </FadeIn>
 
-        {/* RESOLUÇÃO — Convocação final */}
-        <CTAFinal />
+        <FadeIn>
+          <CTAFinal />
+        </FadeIn>
       </main>
 
-      {/* Fechamento */}
       <Footer />
-
-      {/* Botão flutuante WhatsApp — persiste em toda a página */}
       <WhatsAppFloat />
     </>
   );

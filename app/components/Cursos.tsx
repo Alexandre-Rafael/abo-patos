@@ -3,6 +3,12 @@ import { MessageCircle } from "lucide-react";
 
 // [DADO A CONFIRMAR] — Carga horária e datas de cada curso
 
+interface Coordenador {
+  nome: string;
+  titulo?: string;
+  foto?: string;
+}
+
 type Modalidade =
   | "Atualização"
   | "Aperfeiçoamento"
@@ -23,6 +29,7 @@ interface Curso {
   inicio: string;
   capa: string;
   inscricaoUrl?: string;
+  coordenadores?: Coordenador[];
 }
 
 const cursos: Curso[] = [
@@ -37,6 +44,9 @@ const cursos: Curso[] = [
     publico: "Cirurgiões-dentistas",
     inicio: "A confirmar",
     capa: "/imgs/cursos/dentistica.png",
+    coordenadores: [
+      { nome: "Dr. Victor da Mota Martins", titulo: "Coordenador", foto: "/imgs/cursos/prof-victor.jpg" },
+    ],
   },
   {
     numero: "02",
@@ -49,6 +59,10 @@ const cursos: Curso[] = [
     publico: "Cirurgiões-dentistas",
     inicio: "A confirmar",
     capa: "/imgs/cursos/endodontia.png",
+    coordenadores: [
+      { nome: "Dr. Diogo", titulo: "Professor", foto: "/imgs/cursos/prof-diogo.jpg" },
+      { nome: "Dra. Grazi", titulo: "Professora", foto: "/imgs/cursos/prof-grazi.jpg" },
+    ],
   },
   {
     numero: "03",
@@ -61,18 +75,25 @@ const cursos: Curso[] = [
     publico: "Cirurgiões-dentistas",
     inicio: "A confirmar",
     capa: "/imgs/cursos/cirurgia-periodontia.png",
+    coordenadores: [
+      { nome: "Dra. Janaina Rosa Amorim", titulo: "Professora" },
+      { nome: "Dr. Clenivaldo", titulo: "Professor" },
+    ],
   },
   {
     numero: "04",
     titulo: "Especialização em Ortodontia",
     modalidade: "Especialização",
     descricao:
-      "Especialização estruturada em ortodontia clínica, reconhecida pelo CRO-MG, abrangendo diagnóstico, planejamento, biomecânica, aparelhos fixos e alinhadores removíveis.",
+      "Especialização estruturada em ortodontia clínica, reconhecida pelo CRO-MG, abrangendo diagnóstico, planejamento, biomecânica, aparelhos fixos, aparelhos removíveis e alinhadores ortodôntico.",
     formato: "Presencial modular",
     cargaHoraria: "A confirmar",
     publico: "Cirurgiões-dentistas",
     inicio: "A confirmar",
     capa: "/imgs/cursos/ortodontia.png",
+    coordenadores: [
+      { nome: "Prof. Mustapha", titulo: "Professor", foto: "/imgs/cursos/prof-mustapha.jpg" },
+    ],
   },
   {
     numero: "05",
@@ -85,6 +106,10 @@ const cursos: Curso[] = [
     publico: "Cirurgiões-dentistas habilitados",
     inicio: "A confirmar",
     capa: "/imgs/cursos/toxina-botulinica.png",
+    coordenadores: [
+      { nome: "Dr. Renato", titulo: "Professor" },
+      { nome: "Rita", titulo: "Professora" },
+    ],
   },
   {
     numero: "06",
@@ -97,6 +122,10 @@ const cursos: Curso[] = [
     publico: "Cirurgiões-dentistas",
     inicio: "A confirmar",
     capa: "/imgs/cursos/facetas.png",
+    coordenadores: [
+      { nome: "Dr. Victor da Mota Martins", titulo: "Professor", foto: "/imgs/cursos/prof-victor.jpg" },
+      { nome: "Dr. Mauricio", titulo: "Professor", foto: "/imgs/cursos/prof-mauricio.jpg" },
+    ],
   },
   {
     numero: "07",
@@ -175,17 +204,81 @@ function CursoFicha({ curso, invertido }: { curso: Curso; invertido: boolean }) 
     >
       {/* Capa do curso */}
       <div
-        className={`relative flex-shrink-0 lg:w-[38%] aspect-[4/3] lg:aspect-auto min-h-[260px] ${
+        className={`relative flex-shrink-0 lg:w-[38%] aspect-[4/3] lg:aspect-auto min-h-[260px] overflow-hidden ${
           invertido ? "lg:order-2" : "lg:order-1"
         }`}
       >
-        <Image
-          src={curso.capa}
-          alt={curso.titulo}
-          fill
-          sizes="(min-width: 1024px) 38vw, 100vw"
-          className="object-cover"
-        />
+        {curso.coordenadores && curso.coordenadores.length >= 2 && curso.coordenadores.some(c => c.foto) ? (
+          /* 50/50 split para 2+ professores com foto */
+          <div className="absolute inset-0 flex">
+            {curso.coordenadores.slice(0, 2).map((coord, idx) => (
+              <div key={idx} className="relative flex-1 overflow-hidden">
+                {coord.foto ? (
+                  <Image
+                    src={coord.foto}
+                    alt={coord.nome}
+                    fill
+                    sizes="(min-width: 1024px) 19vw, 50vw"
+                    className="object-cover object-top"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: "rgba(1,55,117,0.15)" }}>
+                    <span style={{ fontSize: 40, opacity: 0.3 }}>👤</span>
+                  </div>
+                )}
+                {/* Divisor central */}
+                {idx === 0 && (
+                  <div className="absolute right-0 top-0 bottom-0 w-px" style={{ backgroundColor: "rgba(255,255,255,0.20)" }} />
+                )}
+                {/* Nome sobreposto no rodapé */}
+                <div
+                  className="absolute bottom-0 left-0 right-0 px-3 py-2"
+                  style={{ background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%)" }}
+                >
+                  <p className="text-white font-semibold leading-tight truncate" style={{ fontSize: "11px" }}>{coord.nome}</p>
+                  {coord.titulo && (
+                    <p className="truncate" style={{ fontSize: "10px", color: "rgba(255,255,255,0.65)" }}>{coord.titulo}</p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          /* Capa única: foto do professor (se houver) ou imagem do curso */
+          <>
+            <Image
+              src={
+                curso.coordenadores?.length === 1 && curso.coordenadores[0].foto
+                  ? curso.coordenadores[0].foto
+                  : curso.capa
+              }
+              alt={curso.titulo}
+              fill
+              sizes="(min-width: 1024px) 38vw, 100vw"
+              className="object-cover object-top"
+            />
+            {/* Nomes dos coordenadores em overlay */}
+            {curso.coordenadores && curso.coordenadores.length > 0 && (
+              <div
+                className="absolute bottom-0 left-0 right-0 px-4 py-3 flex flex-wrap gap-x-4 gap-y-1"
+                style={{ background: "linear-gradient(to top, rgba(0,0,0,0.80) 0%, transparent 100%)" }}
+              >
+                {curso.coordenadores.map((coord, idx) => (
+                  <div key={idx}>
+                    <p className="text-white font-semibold leading-tight" style={{ fontSize: "12px" }}>
+                      {coord.nome}
+                    </p>
+                    {coord.titulo && (
+                      <p style={{ fontSize: "10px", color: "rgba(255,255,255,0.65)" }}>
+                        {coord.titulo}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        )}
       </div>
 
       {/* Conteúdo da ficha */}
