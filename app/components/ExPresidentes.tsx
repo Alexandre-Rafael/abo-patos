@@ -33,7 +33,7 @@ const exPresidentes: ExPresidente[] = [
   {
     nome: "Victor da Mota Martins",
     periodo: "2024–2026",
-    foto: "/imgs/presidentes/victor.png",
+    foto: "/imgs/presidentes/victor-terno.png",
     atual: true,
     fotoPosicao: "center 18%",
     fotoZoom: 1.5,
