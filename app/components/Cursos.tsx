@@ -28,6 +28,7 @@ interface Curso {
   publico: string;
   inicio: string;
   capa: string;
+  capaPosition?: string;
   inscricaoUrl?: string;
   coordenadores?: Coordenador[];
 }
@@ -75,9 +76,11 @@ const cursos: Curso[] = [
     publico: "Cirurgiões-dentistas",
     inicio: "A confirmar",
     capa: "/imgs/cursos/cirurgia-periodontia.png",
+    capaPosition: "center 55%",
     coordenadores: [
       { nome: "Dra. Janaina Rosa Amorim", titulo: "Professora" },
       { nome: "Dr. Clenivaldo", titulo: "Professor" },
+      { nome: "Dra. Pollyana Lamounier", titulo: "Professora" },
     ],
   },
   {
@@ -255,7 +258,8 @@ function CursoFicha({ curso, invertido }: { curso: Curso; invertido: boolean }) 
               alt={curso.titulo}
               fill
               sizes="(min-width: 1024px) 38vw, 100vw"
-              className="object-cover object-top"
+              className="object-cover"
+              style={{ objectPosition: curso.capaPosition ?? "center top" }}
             />
             {/* Nomes dos coordenadores em overlay */}
             {curso.coordenadores && curso.coordenadores.length > 0 && (
